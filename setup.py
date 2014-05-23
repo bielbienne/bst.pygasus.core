@@ -36,10 +36,12 @@ setup(name='bb.extjs.core',
       install_requires=[
           'setuptools',
           'bb.extjs.wsgi',
+          'bb.extjs.resources',
           'martian',
-          'zope.component',
+          'grokcore.component',
           'zope.interface',
           'zope.schema',
+          'Genshi'
           # -*- Extra requirements: -*-
       ],
       entry_points="""

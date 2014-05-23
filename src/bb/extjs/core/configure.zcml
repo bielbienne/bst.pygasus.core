@@ -1,0 +1,10 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           i18n_domain="bb.extjs">
+  
+  <include package="zope.component" file="meta.zcml" />
+  <include package="bb.extjs.wsgi" />
+  <include package="bb.extjs.resources" />
+  <grok:grok package="." />
+  
+</configure>
