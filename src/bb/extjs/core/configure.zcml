@@ -3,8 +3,11 @@
            i18n_domain="bb.extjs">
   
   <include package="zope.component" />
+
   <include package="bb.extjs.wsgi" />
   <include package="bb.extjs.resources" />
+  <include package="bb.extjs.scaffolding" />
+
   <grok:grok package="." />
   
 </configure>
