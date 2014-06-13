@@ -17,3 +17,8 @@ from js.extjs import basic
 
 from bb.extjs.core.resources import extjs_resources
 
+from bb.extjs.datamanager.model import AbstractModelHandler
+from bb.extjs.datamanager.model import ExtBaseModel as Model
+from bb.extjs.datamanager.grokker import schema
+
+
