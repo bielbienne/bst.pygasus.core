@@ -43,7 +43,6 @@ setup(name='bb.extjs.core',
           'martian',
           'grokcore.component',
           'zope.interface',
-          'zope.schema',
           'Genshi'
           # -*- Extra requirements: -*-
       ],
