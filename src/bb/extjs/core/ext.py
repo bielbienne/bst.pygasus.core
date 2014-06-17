@@ -11,7 +11,7 @@ from bb.extjs.core.applicationcontext import ApplicationContext
 from bb.extjs.wsgi.events import IPreRequestProcessingEvent
 from bb.extjs.wsgi.events import IPostRequestProcessingEvent
 
-from bb.extjs.scaffolding.base import Scaffolding
+from bb.extjs.scaffolding.decorator import ScaffoldingDecorator as scaffolding
 
 from js.extjs import basic
 
