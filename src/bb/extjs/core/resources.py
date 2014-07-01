@@ -3,6 +3,7 @@ from js.extjs import basic
 
 
 class BootstrapFanstaticResource(fanstatic.Resource):
+
     def __init__(self):
         
         old_state = fanstatic.core._resource_file_existence_checking
