@@ -1,4 +1,13 @@
 from time import time
+from urllib.parse import urljoin
+
+from grokcore import component
+from zope.interface import implementer
+
+from bb.extjs.core.interfaces import IBaseUrl
+from bb.extjs.wsgi.interfaces import IRequest
+
+
 
 class ramcache(object):
     """ decorator to cache a function into ram
@@ -24,3 +33,20 @@ class ramcache(object):
             else:
                 return cache['result']
         return wrapper
+
+
+@implementer(IBaseUrl)
+class BaseUrl(component.Adapter):
+    component.context(IRequest)
+
+    def __init__(self, request):
+        self.request = request
+
+    def url(self, relativ_path=None):
+        base_url = self.request.host_url + self.request.path
+        full, last = base_url.rsplit('/', 1)
+        if not last:
+            base_url = full
+        if relativ_path is None:
+            return base_url
+        return urljoin(base_url, relativ_path)
