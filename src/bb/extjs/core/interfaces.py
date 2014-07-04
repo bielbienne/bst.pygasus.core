@@ -1,3 +1,4 @@
+from zope import schema
 from zope.interface import Interface
 from zope.interface import Attribute
 
@@ -7,6 +8,9 @@ class IApplicationContext(Interface):
     resources = Attribute('fanstatic resources for all js and css')
     application = Attribute('classname of application entry point eg. "bielbienne.iptt.Application"')
     namespace = Attribute('Extjs name space eg: "bielbienne.iptt"')
+
+    credentials_pluggins = Attribute('a list of utility names for credentials plugins')
+    authentication_pluggins = Attribute('a list of utility names auth plugins')
 
 
 class IBaseUrl(Interface):

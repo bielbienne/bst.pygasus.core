@@ -9,7 +9,7 @@
   <include package="bb.extjs.datamanager" />
   <include package="bb.extjs.resources" />
   <include package="bb.extjs.scaffolding" />
-  
+  <include package="bb.extjs.security" />
   
   <grok:grok package="." />
   
