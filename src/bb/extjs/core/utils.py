@@ -7,7 +7,7 @@ from zope.interface import implementer
 from bb.extjs.core.interfaces import IBaseUrl
 from bb.extjs.wsgi.interfaces import IRequest
 
-
+X_FULL_PATH = 'X_FULL_PATH'
 
 class ramcache(object):
     """ decorator to cache a function into ram
@@ -43,10 +43,13 @@ class BaseUrl(component.Adapter):
         self.request = request
 
     def url(self, relativ_path=None):
-        base_url = self.request.host_url + self.request.path
-        full, last = base_url.rsplit('/', 1)
-        if not last:
-            base_url = full
+        if X_FULL_PATH in self.request.headers:
+            base_url = self.request.headers.get(X_FULL_PATH)
+        else:
+            base_url = self.request.host_url + self.request.path
+            full, last = base_url.rsplit('/', 1)
+            if not last:
+                base_url = full
         if relativ_path is None:
             return base_url
         return urljoin(base_url, relativ_path)
