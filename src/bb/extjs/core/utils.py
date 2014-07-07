@@ -50,9 +50,13 @@ class BaseUrl(component.Adapter):
             full, last = base_url.rsplit('/', 1)
             if not last:
                 base_url = full
-        if base_url.endswith('/'):
-            base_url = base_url[:-1]
+        if not base_url.endswith('/'):
+            base_url = '%s/' % base_url
 
         if relativ_path is None:
             return base_url
+
+        if relativ_path.startswith('/'):
+            relativ_path = relativ_path[1:]
+
         return urljoin(base_url, relativ_path)
