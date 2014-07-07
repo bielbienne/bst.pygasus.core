@@ -46,10 +46,8 @@ class BaseUrl(component.Adapter):
         if X_FULL_PATH in self.request.headers:
             base_url = self.request.headers.get(X_FULL_PATH)
         else:
-            base_url = self.request.host_url + self.request.path
-            full, last = base_url.rsplit('/', 1)
-            if not last:
-                base_url = full
+            base_url = self.request.host_url
+
         if not base_url.endswith('/'):
             base_url = '%s/' % base_url
 
@@ -59,4 +57,4 @@ class BaseUrl(component.Adapter):
         if relativ_path.startswith('/'):
             relativ_path = relativ_path[1:]
 
-        return urljoin(base_url, relativ_path)
+        return base_url + relativ_path
