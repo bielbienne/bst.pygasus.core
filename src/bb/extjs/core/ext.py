@@ -16,6 +16,7 @@ from bb.extjs.scaffolding.decorator import ScaffoldingDecorator as scaffolding
 from js.extjs import basic
 
 from bb.extjs.core.resources import extjs_resources
+from bb.extjs.core.resources import extjs_resources_skinless
 from bb.extjs.core.resources import BaseClassPathMapping as ClassPathMapping
 
 from bb.extjs.datamanager.model import AbstractModelHandler
