@@ -8,6 +8,7 @@ from grokcore.component import *
 from zope.interface import implementer
 from bb.extjs.core.applicationcontext import ApplicationContext
 
+from bb.extjs.wsgi.interfaces import IRequest
 from bb.extjs.wsgi.events import IPreRequestProcessingEvent
 from bb.extjs.wsgi.events import IPostRequestProcessingEvent
 
