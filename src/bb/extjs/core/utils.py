@@ -1,11 +1,14 @@
 from time import time
 from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 from grokcore import component
 from zope.interface import implementer
-
+from zope.component import queryUtility
 from bb.extjs.core.interfaces import IBaseUrl
 from bb.extjs.wsgi.interfaces import IRequest
+from bb.extjs.core.interfaces import IApplicationContext
+from bb.extjs.core.interfaces import DEFAULT_EXTJS_APPLICATION
 
 X_FULL_PATH = 'X_FULL_PATH'
 
@@ -46,10 +49,16 @@ class BaseUrl(component.Adapter):
         if X_FULL_PATH in self.request.headers:
             base_url = self.request.headers.get(X_FULL_PATH)
         else:
-            base_url = self.request.host_url
+            base_url = self.request.application_url
 
         if not base_url.endswith('/'):
             base_url = '%s/' % base_url
+
+        # if the publisher take a default utility. we
+        # need rebuild the correct url.
+        appname = urlparse(base_url).path.split('/')[-2:-1][0]
+        if queryUtility(IApplicationContext, name=appname) is None:
+            base_url = '%s%s/' % (base_url, DEFAULT_EXTJS_APPLICATION,)
 
         if relativ_path is None:
             return base_url
