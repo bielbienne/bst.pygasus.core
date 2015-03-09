@@ -5,6 +5,7 @@
   <include package="zope.component" />
   <include package="grokcore.component" file="meta.zcml" />
 
+  <include package="bb.extjs.i18n" />
   <include package="bb.extjs.wsgi" />
   <include package="bb.extjs.datamanager" />
   <include package="bb.extjs.resources" />

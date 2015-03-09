@@ -8,7 +8,7 @@ from js.extjs import basic
 
 from bb.extjs.core.interfaces import IApplicationContext
 from bb.extjs.resources.interfaces import IClassPathMapping
-
+from bb.extjs.i18n import i18njs
 
 
 
@@ -30,7 +30,7 @@ class ExtClassPathMapping(BaseClassPathMapping):
 
 class BootstrapFanstaticResource(fanstatic.Resource):
     
-    _depends = [basic]
+    _depends = [i18njs, basic]
 
     def __init__(self):
         
@@ -44,7 +44,7 @@ class BootstrapFanstaticResource(fanstatic.Resource):
         return self.renderer('%s/bootstrap' % baseurl)
 
 class BootstrapFanstaticResourceSkinless(BootstrapFanstaticResource):
-    _depends = [js]
+    _depends = [i18njs, js]
 
 extjs_resources = BootstrapFanstaticResource()
 extjs_resources_skinless = BootstrapFanstaticResourceSkinless()
