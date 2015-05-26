@@ -11,29 +11,27 @@ from bb.extjs.resources.interfaces import IClassPathMapping
 from bb.extjs.i18n import i18njs
 
 
-
-
 @implementer(IClassPathMapping)
 class BaseClassPathMapping(component.Subscription):
     """ Base class for all extjs class path mapping registrations
     """
     component.baseclass()
     component.context(IApplicationContext)
-    namespace=''
-    path=''
+    namespace = ''
+    path = ''
 
 
 class ExtClassPathMapping(BaseClassPathMapping):
-    namespace='Ext'
-    path='fanstatic/extjs/src/'
+    namespace = 'Ext'
+    path = 'fanstatic/extjs/src/'
 
 
 class BootstrapFanstaticResource(fanstatic.Resource):
-    
+
     _depends = [i18njs, basic]
 
     def __init__(self):
-        
+
         old_state = fanstatic.core._resource_file_existence_checking
         fanstatic.core._resource_file_existence_checking = False
         super(BootstrapFanstaticResource, self).__init__(fanstatic.Library('', ''), 'fake.js', depends=self._depends)
@@ -42,6 +40,7 @@ class BootstrapFanstaticResource(fanstatic.Resource):
     def render(self, library_url):
         baseurl = library_url.rsplit('/', 2)[0]
         return self.renderer('%s/bootstrap' % baseurl)
+
 
 class BootstrapFanstaticResourceSkinless(BootstrapFanstaticResource):
     _depends = [i18njs, js]

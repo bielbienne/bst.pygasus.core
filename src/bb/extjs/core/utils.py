@@ -12,17 +12,18 @@ from bb.extjs.core.interfaces import DEFAULT_EXTJS_APPLICATION
 
 X_FULL_PATH = 'X_FULL_PATH'
 
+
 class ramcache(object):
     """ decorator to cache a function into ram
         arguments should be hashable
     """
-    
+
     def __init__(self, expire):
         """ expire in miliseconds
         """
         self.expire = expire
         self.cache = dict()
-    
+
     def __call__(self, func):
         def wrapper(*args, **kw):
             key = hash((args, tuple(kw),))

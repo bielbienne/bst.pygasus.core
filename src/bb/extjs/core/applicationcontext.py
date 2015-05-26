@@ -37,13 +37,13 @@ class ApplicationContext(GlobalUtility):
     """
     baseclass()
     name(DEFAULT_EXTJS_APPLICATION)
-    
+
     def __init__(self):
         super(ApplicationContext, self).__init__()
         self._sitemanager = LocalComponentsRegistry(self.application)
-    
+
     def getSiteManager(self):
         return self._sitemanager
-    
+
     def setSiteManager(self, sitemanager):
         self._sitemanager = sitemanager

@@ -18,12 +18,12 @@ class IApplicationContext(ISite):
 
 
 class IBaseUrl(Interface):
-    
+
     def __init__(self, request):
         """
             request: Client Request
         """
-    
+
     def url(self, relativ_path=None):
         """ return base url or a url build
             with a given relative path
