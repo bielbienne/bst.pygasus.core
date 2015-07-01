@@ -6,7 +6,7 @@ version = '1.0'
 long_description = (
     open('README.rst').read()
     + '\n' +
-    open('CHANGES.txt').read()
+    open('CHANGES.rst').read()
     + '\n')
 
 setup(name='bst.pygasus.core',
