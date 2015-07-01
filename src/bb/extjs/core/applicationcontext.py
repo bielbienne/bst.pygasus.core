@@ -7,8 +7,8 @@ from zope.component import getGlobalSiteManager
 from zope.component.globalregistry import BaseGlobalComponents
 from zope.component.globalregistry import GlobalAdapterRegistry
 
-from bb.extjs.core.interfaces import IApplicationContext
-from bb.extjs.core.interfaces import DEFAULT_EXTJS_APPLICATION
+from bst.pygasus.core.interfaces import IApplicationContext
+from bst.pygasus.core.interfaces import DEFAULT_EXTJS_APPLICATION
 
 
 class LocalAdapterRegistry(GlobalAdapterRegistry):

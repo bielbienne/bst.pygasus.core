@@ -5,10 +5,10 @@ from urllib.parse import urlparse
 from grokcore import component
 from zope.interface import implementer
 from zope.component import queryUtility
-from bb.extjs.core.interfaces import IBaseUrl
-from bb.extjs.wsgi.interfaces import IRequest
-from bb.extjs.core.interfaces import IApplicationContext
-from bb.extjs.core.interfaces import DEFAULT_EXTJS_APPLICATION
+from bst.pygasus.core.interfaces import IBaseUrl
+from bst.pygasus.wsgi.interfaces import IRequest
+from bst.pygasus.core.interfaces import IApplicationContext
+from bst.pygasus.core.interfaces import DEFAULT_EXTJS_APPLICATION
 
 X_FULL_PATH = 'X_FULL_PATH'
 

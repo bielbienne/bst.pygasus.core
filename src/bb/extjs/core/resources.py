@@ -6,9 +6,9 @@ from zope.interface import implementer
 from js.extjs import js
 from js.extjs import basic
 
-from bb.extjs.core.interfaces import IApplicationContext
-from bb.extjs.resources.interfaces import IClassPathMapping
-from bb.extjs.i18n import i18njs
+from bst.pygasus.core.interfaces import IApplicationContext
+from bst.pygasus.resources.interfaces import IClassPathMapping
+from bst.pygasus.i18n import i18njs
 
 
 @implementer(IClassPathMapping)

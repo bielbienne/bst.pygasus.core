@@ -1,16 +1,16 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:grok="http://namespaces.zope.org/grok"
-           i18n_domain="bb.extjs">
+           i18n_domain="bst.pygasus">
   
   <include package="zope.component" />
   <include package="grokcore.component" file="meta.zcml" />
 
-  <include package="bb.extjs.i18n" />
-  <include package="bb.extjs.wsgi" />
-  <include package="bb.extjs.datamanager" />
-  <include package="bb.extjs.resources" />
-  <include package="bb.extjs.scaffolding" />
-  <include package="bb.extjs.security" />
+  <include package="bst.pygasus.i18n" />
+  <include package="bst.pygasus.wsgi" />
+  <include package="bst.pygasus.datamanager" />
+  <include package="bst.pygasus.resources" />
+  <include package="bst.pygasus.scaffolding" />
+  <include package="bst.pygasus.security" />
   
   <grok:grok package="." />
   
