@@ -4,12 +4,7 @@ import os
 version = '1.0'
 
 long_description = (
-    open('README.txt').read()
-    + '\n' +
-    'Contributors\n'
-    '============\n'
-    + '\n' +
-    open('CONTRIBUTORS.txt').read()
+    open('README.rst').read()
     + '\n' +
     open('CHANGES.txt').read()
     + '\n')
@@ -21,13 +16,18 @@ setup(name='bb.extjs.core',
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-          "Programming Language :: Python",
+          'Programming Language :: Python :: 3 :: Only',
+          'Natural Language :: English',
+          'License :: OSI Approved :: Zope Public License',
+          'Operating System :: OS Independent',
+          'Development Status :: 4 - Beta'
       ],
+
       keywords='',
       author='',
       author_email='',
-      url='http://svn.plone.org/svn/collective/',
-      license='gpl',
+      url='https://github.com/bielbienne/bb.extjs.core',
+      license='ZPL 2.1',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       namespace_packages=['bb', 'bb.extjs'],
