@@ -11,21 +11,21 @@ long_description = (
 
 setup(name='bst.pygasus.core',
       version=version,
-      description="Python Framework for ExtJs",
+      description="Pygasus web framework working with ExtJs",
       long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-          'Programming Language :: Python :: 3 :: Only',
+          'Programming Language :: Python :: 3',
           'Natural Language :: English',
           'License :: OSI Approved :: Zope Public License',
           'Operating System :: OS Independent',
           'Development Status :: 4 - Beta'
       ],
 
-      keywords='',
-      author='',
-      author_email='',
+      keywords='pygasus web framework extjs',
+      author='codeix',
+      author_email='samuel.riolo@biel-bienne.ch',
       url='https://github.com/bielbienne/bst.pygasus.core',
       license='ZPL 2.1',
       packages=find_packages('src'),
