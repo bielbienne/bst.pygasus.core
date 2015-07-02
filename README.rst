@@ -9,6 +9,41 @@ customizable for your project.
 
 bst.pygasus and all corresponding submodules is licensed under the ZPL 2.1, see LICENSE.txt for details.
 
+Architecture
+------------
+
+.. figure:: docs/architecture.png
+   :alt: Architecture
+
+   yellow modules are planned to be developed in the near future
+
+The various packages are:
+
+bst.extjs.core
+    The core package of the framework that assembles all required packages together.
+
+bst.extjs.datamanager
+    The datamanager manages data coming from the client and data sent to the client's browser.
+
+bst.extjs.i18n
+    This package handles the translation for multilingual sites and applications.
+
+bst.extjs.scaffolding
+    Scaffolding is a package to generate standard models, stores, views and grids for ExtJs. 
+
+bst.extjs.security
+    This package provide a default login mask and a pluggable authentication. In the future we also plan to
+    implement a role based permission model.
+
+bst.extjs.session
+    This package creates a cookie on client browsers and provides a server side session store.
+
+bst.extjs.wsgi
+    The layer needed to let the application work as a WSGI server.
+
+bst.extjs.resources
+    This package is responsible to share all needed static resources with the client.
+
 
 Getting started
 ===============
@@ -24,7 +59,72 @@ page.
 Buildout
 --------
 
+We recommend to create first a buildout for you project. The buildout will install all required
+dependency and scripts needed to run a server.
 
+Filestructure:
+
+.. code::
+
+    buildout
+    ├── bootstrap.py
+    ├── buildout.cfg
+    ├── etc
+    │   ├── deploy.ini.in
+    │   └── site.zcml.in
+    ├── versions.cfg
+    └── sources.cfg
+
+.. code:: ini
+
+    [buildout]
+    parts =
+        app
+        zcml
+    
+    extensions = mr.developer
+    update-versions-file = versions.cfg
+
+    auto-checkout =
+        paste
+        js.extjs
+        bst.pygasus.core
+        bst.pygasus.wsgi
+        bst.pygasus.scaffolding
+        bst.pygasus.datamanager
+        bst.pygasus.resources
+        bst.pygasus.security
+        bst.pygasus.session
+        bst.pygasus.i18n
+        bst.pygasus.demo
+    
+    [debug_ini]
+    recipe = collective.recipe.template
+    input = etc/deploy.ini.in
+    output = ${buildout:parts-directory}/etc/${:outfile}
+    outfile = debug.ini
+    
+    [zcml]
+    recipe = collective.recipe.template
+    input = etc/site.zcml.in
+    output = ${buildout:parts-directory}/etc/${:outfile}
+    outfile = site.zcml
+    
+    [app]
+    recipe = zc.recipe.egg:script
+    arguments="${debug_ini:output}"
+    eggs =
+        bst.pygasus.wsgi
+        ${app:eggs}
+
+
+Run you buildout
+
+.. code:: bash
+
+    $ cd buildout
+    $ python3 boostrap.py
+    $ ./bin/buildout
 
 Demo application
 ----------------
@@ -47,6 +147,7 @@ Additional References
 
 About us
 ========
-http://foss-int.biel-bienne.ch/blog/
+We are the IT Services of Biel/Bienne, Switzerland.
+http://foss.biel-bienne.ch/blog/
 
 
