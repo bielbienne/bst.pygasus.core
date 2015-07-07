@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/bielbienne/bst.pygasus.demo.svg?branch=master
+    :target: https://travis-ci.org/bielbienne/bst.pygasus.demo
+
 .. contents::
 
 Introduction
@@ -7,7 +10,7 @@ Pygasus is a new Python 3 framework to build web applications with
 `Sencha ExtJS <https://www.sencha.com/products/extjs/#overview>`_. Pygasus is designed to be full
 customizable for your project. 
 
-bst.pygasus and all corresponding submodules is licensed under the ZPL 2.1, see LICENSE.txt for details.
+bst.pygasus and all corresponding submodules are licensed under the ZPL 2.1, see LICENSE.txt for details.
 
 Architecture
 ------------
@@ -51,33 +54,31 @@ Getting started
 Recommendation
 --------------
 
-The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with
-it may be better first learn the basics about. You can follow the references at the bottom from this
-page.
-
+The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with it, we recommend you first learn its basics. You can follow the links at the bottom of this page.
 
 Buildout
 --------
 
-We recommend to create first a buildout for you project. The buildout will install all required
-dependency and scripts needed to run a server.
+We recommend to setup up a buildout for your project. First It will install all required dependencies and the scripts needed to run a server.
 
-Filestructure:
+File structure:
 
 .. code::
 
     buildout
     ├── bootstrap.py
     ├── buildout.cfg
-    ├── etc
-    │   ├── deploy.ini.in
-    │   └── site.zcml.in
-    ├── versions.cfg
-    └── sources.cfg
+    └── etc
+        ├── deploy.ini.in
+        └── site.zcml.in
+
 
 .. code:: ini
 
     [buildout]
+    
+    extends = 
+        
     parts =
         app
         zcml
@@ -118,7 +119,7 @@ Filestructure:
         ${app:eggs}
 
 
-Run you buildout
+Run your buildout
 
 .. code:: bash
 
@@ -126,11 +127,16 @@ Run you buildout
     $ python3 boostrap.py
     $ ./bin/buildout
 
+
+Create an application
+---------------------
+
+TODO
+
+
 Demo application
 ----------------
-
-We have a demo application, that you can easy install trough a buildout. For the installation please follow
-the instruction on `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_.
+We have a demo application that you can easy install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_..
 
 
 Additional References
@@ -149,5 +155,4 @@ About us
 ========
 We are the IT Services of Biel/Bienne, Switzerland.
 http://foss.biel-bienne.ch/blog/
-
 
