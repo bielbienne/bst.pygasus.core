@@ -59,7 +59,7 @@ The ZCA (Zope component Architectur) is a main element in this framework. If you
 Buildout
 --------
 
-We recommend to setup up a buildout for your project. First It will install all required dependencies and the scripts needed to run a server.
+We recommend to setup up a buildout for your project. First It will install all required dependencies and the scripts needed to run a server. The boostrap file can be downloaded at https://bootstrap.pypa.io/bootstrap-buildout.py.
 
 File structure:
 
@@ -68,26 +68,29 @@ File structure:
     buildout
     ├── bootstrap.py
     ├── buildout.cfg
-    └── etc
-        ├── deploy.ini.in
-        └── site.zcml.in
+    ├── etc
+    │   ├── deploy.ini.in
+    │   └── site.zcml.in
+    └── dev
+        └── myproject
 
+buildout.cfg
 
 .. code:: ini
 
     [buildout]
     
     extends = 
-        
+        https://raw.githubusercontent.com/bielbienne/bst.pygasus.demo/master/sources.cfg
+        https://raw.githubusercontent.com/bielbienne/bst.pygasus.demo/master/versions.cfg
+    
+    develop = dev/myproject  
     parts =
         app
         zcml
     
     extensions = mr.developer
-    update-versions-file = versions.cfg
-
     auto-checkout =
-        paste
         js.extjs
         bst.pygasus.core
         bst.pygasus.wsgi
@@ -116,10 +119,35 @@ File structure:
     arguments="${debug_ini:output}"
     eggs =
         bst.pygasus.wsgi
-        ${app:eggs}
+        myproject
 
+etc/deploy.ini.in
 
-Run your buildout
+.. code:: ini
+
+    [zcml]
+    path = ${zcml:output}
+
+    [app:main]
+    use = egg:bst.pygasus.wsgi#main
+
+    [server:debug]
+    use = egg:waitress#http
+    host = 127.0.0.1
+    port = 5000
+    threadpool_workers = 1
+    threadpool_spawn_if_under = 1
+    threadpool_max_requests = 0
+
+etc/site.zcml.in
+
+.. code:: xml
+
+    <configure xmlns="http://namespaces.zope.org/zope">
+        <include package="myproject" />
+    </configure>
+
+Run your buildout. (You must first create your own project, show next part)
 
 .. code:: bash
 
@@ -131,7 +159,99 @@ Run your buildout
 Create an application
 ---------------------
 
-TODO
+Proposed File Structure
+~~~~~~~~~~~~~~~~~~~~~~~
+
+setup configure.zcml
+~~~~~~~~~~~~~~~~~~~~
+
+.. code:: xml
+
+    <configure xmlns="http://namespaces.zope.org/zope"
+               xmlns:grok="http://namespaces.zope.org/grok"
+               xmlns:i18n="http://namespaces.zope.org/i18n"
+               i18n_domain="myproject">
+    
+        <include package="bst.pygasus.core" />
+    
+        <grok:grok package="." />
+    
+        <i18n:registerTranslations directory="locales" />
+    
+    </configure>
+
+
+Create an application context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    from fanstatic import Library
+    from fanstatic import Resource
+    from bst.pygasus.core import ext
+        
+    library = Library('demo', 'app')
+
+    class DemoContext(ext.ApplicationContext):
+    
+        title = 'Demo'
+        application = 'bst.pygasus.demo.Application'
+        namespace = 'bst.pygasus.demo'
+        resources = Resource(library, 'application.js',
+                             depends=[ext.extjs_resources])
+
+Register additional ExtJs paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    class ViewClassPathMapping(ext.ClassPathMapping):
+        namespace = 'bst.pygasus.demo.view'
+        path = 'fanstatic/demo/view'
+
+Define a schema
+~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    from bst.pygasus.core import ext
+        
+    from zope import schema
+    from zope.interface import Interface
+    
+    @ext.scaffolding('Card', 'Magic the Gathering')
+    class ICard(Interface):
+        id = schema.Id(title='ID', required=False)
+    
+        name = schema.TextLine(title='Name', required=True)
+
+        costs = schema.Int(title='Costs', required=False)
+
+        publication = schema.Date(title='Publication', required=True)
+
+
+Create a Model
+~~~~~~~~~~~~~~
+
+.. code:: python
+
+    from bst.pygasus.core import ext
+    from bst.pygasus.demo import schema
+    from zope.schema.fieldproperty import FieldProperty
+
+    class Card(ext.Model):
+        ext.schema(schema.ICard)
+        id = FieldProperty(ICard['id'])
+        name = FieldProperty(ICard['name'])
+        costs = FieldProperty(ICard['costs'])
+        publication = FieldProperty(ICard['publication'])
+
+Create a handler for CRUD requests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+i18n (Internationalization)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
 Demo application
@@ -155,4 +275,3 @@ About us
 ========
 We are the IT Services of Biel/Bienne, Switzerland.
 http://foss.biel-bienne.ch/blog/
-
