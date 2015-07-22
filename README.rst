@@ -383,6 +383,58 @@ You can use the lingua package to crawl translation from python and ExtJS files 
     ./bin/pot-create –d <domain> -o <filename>.pot <source>
 
 
+Using Scaffolding
+~~~~~~~~~~~~~~~~~
+
+Scaffolding provides default ExtJS-classes that can be directly used. Use the the "required" attribute to load a scaffolding class. In follow example we have defined the xtype to "DisplayCard". This will generate a read only view with all fields from the schema ICard.
+
+.. code:: javascript
+
+    Ext.define('bst.pygasus.demo.view.CardView', {
+        extend: 'Ext.window.Window',
+    
+        requires: [
+            'scaffolding.display.Card'
+        ],
+    
+        itemId: 'cardView',
+        layout: 'vbox',
+    
+        initComponent: function() {
+            var me = this;
+            
+            me.items = [{
+                xtype: 'DisplayCard',
+                itemId: 'displayCard',
+                title: '',
+                maxWidth: '500'
+            },
+            {
+                xtype: 'button',
+                text: 'Delete',
+                action: 'delete'
+            }];
+    
+            me.bodyPadding = '5 5 5 5';
+    
+            me.callParent(arguments);
+        }
+    
+    });
+
+As an another example we use buffered store from scaffolding
+
+.. code:: javascript
+
+    Ext.define('bst.pygasus.demo.controller.Main', {
+        extend: 'Ext.app.Controller',
+        
+        requires: [
+            'scaffolding.bufferedstore.Card'
+        ],
+        
+        ....
+
 
 
 Demo application
