@@ -422,7 +422,7 @@ Scaffolding provides default ExtJS-classes that can be directly used. Use the th
     
     });
 
-As an another example we use buffered store from scaffolding
+As an another example we use buffered store from scaffolding:
 
 .. code:: javascript
 
@@ -439,7 +439,7 @@ As an another example we use buffered store from scaffolding
 
 Demo application
 ----------------
-We have a demo application that you can easily install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_..
+We have a demo application that you can easily install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_.
 
 
 External References
