@@ -37,7 +37,7 @@ bst.extjs.i18n
     This package handles the translation for multilingual sites and applications.
 
 bst.extjs.scaffolding
-    Scaffolding is a package to generate standard models, stores, views and grids for ExtJs. 
+    Scaffolding is a package to generate standard models, stores, views and grids for ExtJS. 
 
 bst.extjs.security
     This package provide a default login mask and a pluggable authentication. In the future we also plan to
@@ -59,12 +59,12 @@ Getting started
 Recommendation
 --------------
 
-The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with it, we recommend you first learn its basics. You can follow the links at the bottom of this page. Also other external libraries are already good documented and this why we don't do it an second time.
+The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with it, we recommend you first learn its basics. You can follow the links at the bottom of this page. Also other external libraries are already well documented, which is why we didn't want to do that twice.
 
 Buildout
 --------
 
-We recommend to setup up a buildout for your project. First It will install all required dependencies and the scripts needed to run a server. The boostrap file can be downloaded at https://bootstrap.pypa.io/bootstrap-buildout.py.
+We recommend to setup up a buildout for your project. First it will install all required dependencies and the scripts needed to run a server. The boostrap file can be downloaded at https://bootstrap.pypa.io/bootstrap-buildout.py.
 
 File structure:
 
@@ -160,7 +160,7 @@ etc/site.zcml.in
         <include package="myproject" />
     </configure>
 
-Run your buildout. (You must first create your own project, show next part)
+Run your buildout. (You must first create your own project as shown in next part)
 
 .. code:: bash
 
@@ -175,7 +175,7 @@ Create an application
 Proposed File Structure
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-We propose the follow file structure inside your python egg.
+We propose the following file structure inside your python egg:
 
 .. code::
 
@@ -243,10 +243,10 @@ Create an application context (extjs.py)
                              depends=[ext.extjs_resources])
 
 
-Register additional ExtJs paths (extjs.py)
+Register additional ExtJS paths (extjs.py)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ExtJs need to know where additional ExtJs-Classes can be loaded. This is why each namespace used in Extjs need to be registred. In this example we regstister two namespace for 'bst.pygasus.demo.view' and 'bst.pygasus.demo.controller'. The path begins normaly with 'fanstatic', as next your library name "demo" ( :python:`Library('demo', 'app')` ) and at the end a subdirectory.
+ExtJS needs to know where additional ExtJS-Classes can be loaded. This is why each namespace used in ExtJS needs to be registred. In this example we regstister two namespaces for 'bst.pygasus.demo.view' and 'bst.pygasus.demo.controller'. The path usually begins with 'fanstatic', followed by your library name (e.g. "demo") ( :python:`Library('demo', 'app')` ) and then, at the end, a subdirectory.
 
 .. code:: python
 
@@ -262,7 +262,7 @@ ExtJs need to know where additional ExtJs-Classes can be loaded. This is why eac
 Define a schema (schema.py)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With this schema different ExtJs-Classes, like form, store or model are on the fly auto generated. Look at the package bst.pygasus.scaffolding for the supported types and class generation. Feel free to extend your own generation of ExtJs classes for your project. This schema will also be used to transform json to a python model or the revers.
+With this schema different ExtJS-Classes like form, store or model, are auto generated on the fly. Look at the package bst.pygasus.scaffolding for the supported types and class generation. Feel free to extend this with your own generators of ExtJS classes for your project. This schema will also be used to transform json to a python model or vice versa.
 
 .. code:: python
 
@@ -285,7 +285,7 @@ With this schema different ExtJs-Classes, like form, store or model are on the f
 Create a Model (model.py)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The model is used to transfer data from server to client and back.
+The model is used to transfer data from the server to client and back.
 
 .. code:: python
 
@@ -305,7 +305,7 @@ The model is used to transfer data from server to client and back.
 Create a handler for CRUD requests (handler.py)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The handler for an definded model provide the CRUD operations. Now is up to you what ever you implement in these methods.
+The handler for an definded model provides the CRUD operations. Now it is up to you to implement whatever you need in these methods.
 
 .. code:: python
 
@@ -339,7 +339,7 @@ The handler for an definded model provide the CRUD operations. Now is up to you 
 i18n (Internationalization)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Usual you define a domain name for each package. For do that create an instance from the MessageFactory in the __init__.py
+Usually you define a domain name for each package. In order to do that you create an instance of MessageFactory in the __init__.py file:
 
 .. code:: python
 
@@ -347,14 +347,14 @@ Usual you define a domain name for each package. For do that create an instance 
 
     _ = MessageFactory('bst.pygasus.demo')
 
-Now you can use translation msg to anywhere you want a string in multiple languages.
+Now you can use translation messages anywhere you want to translate a string to multiple languages:
 
 .. code:: python
 
     publication = schema.Date(title=_('publication_title', default='Publication'), required=True)
 
 
-If you want use translations in ExtJs the same works similar like in python. Simply write at top of the file a variable and give the domain name in the MessageFactory.
+If you want use translations in ExtJS, it works similar to translations in python. Simply write a variable at the top of the file and pass the domain name in the MessageFactory:
 
 .. code:: javascript
 
@@ -365,7 +365,7 @@ If you want use translations in ExtJs the same works similar like in python. Sim
     
         ....
 
-Now you can anywhere in the class translate message with the variable defined.
+Now you can translate messages with the variable defined anywhere in the class:
 
 .. code:: javascript
 
@@ -376,7 +376,7 @@ Now you can anywhere in the class translate message with the variable defined.
     },
 
 
-You can use lingua package to crawl translation from python and extjs files and generate a .pot file with it. This application is allready installed by the buildout. After generating a .pot file you can use different kind of gettext tool to merge and build the finale .po and .mo files for each languages.
+You can use the lingua package to crawl translation from python and ExtJS files and generate a .pot file with it. This application is already installed by  buildout. After generating a .pot file you can use different kinds of gettext tools to merge and build the final .po and .mo files for each language:
 
 .. code:: bash
 
@@ -387,7 +387,7 @@ You can use lingua package to crawl translation from python and extjs files and 
 
 Demo application
 ----------------
-We have a demo application that you can easy install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_..
+We have a demo application that you can easily install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_..
 
 
 External References
