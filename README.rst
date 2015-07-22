@@ -1,3 +1,8 @@
+.. role:: python(code)
+   :language: python
+
+
+
 .. image:: https://travis-ci.org/bielbienne/bst.pygasus.demo.svg?branch=master
     :target: https://travis-ci.org/bielbienne/bst.pygasus.demo
 
@@ -54,7 +59,7 @@ Getting started
 Recommendation
 --------------
 
-The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with it, we recommend you first learn its basics. You can follow the links at the bottom of this page.
+The ZCA (Zope component Architectur) is a main element in this framework. If you are not familiar with it, we recommend you first learn its basics. You can follow the links at the bottom of this page. Also other external libraries are already good documented and this why we don't do it an second time.
 
 Buildout
 --------
@@ -69,8 +74,8 @@ File structure:
     ├── bootstrap.py
     ├── buildout.cfg
     ├── etc
-    │   ├── deploy.ini.in
-    │   └── site.zcml.in
+    │   ├── deploy.ini.in
+    │   └── site.zcml.in
     └── dev
         └── myproject
 
@@ -88,6 +93,7 @@ buildout.cfg
     parts =
         app
         zcml
+        lingua
     
     extensions = mr.developer
     auto-checkout =
@@ -120,6 +126,13 @@ buildout.cfg
     eggs =
         bst.pygasus.wsgi
         myproject
+
+    [lingua]
+    unzip = true
+    recipe = zc.recipe.egg
+    eggs =
+        lingua
+        bst.pygasus.i18n
 
 etc/deploy.ini.in
 
@@ -162,6 +175,35 @@ Create an application
 Proposed File Structure
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+We propose the follow file structure inside your python egg.
+
+.. code::
+
+    ├── app
+    │   ├── application.js
+    │   ├── controller
+    │   │   ├── Card.js
+    │   │   └── Main.js
+    │   ├── resources
+    │   │   └── css
+    │   │       └── styles.css
+    │   └── view
+    │       ├── CardView.js
+    │       └── MainView.js
+    ├── configure.zcml
+    ├── extjs.py
+    ├── handler.py
+    ├── __init__.py
+    ├── locales
+    │   ├── bb.extjs.demo.pot
+    │   └── fr
+    │       └── LC_MESSAGES
+    │           ├── bst.pygasus.demo.mo
+    │           └── bst.pygasus.demo.po
+    ├── model.py
+    └── schema.py
+
+
 setup configure.zcml
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -181,8 +223,8 @@ setup configure.zcml
     </configure>
 
 
-Create an application context
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create an application context (extjs.py)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
@@ -200,8 +242,11 @@ Create an application context
         resources = Resource(library, 'application.js',
                              depends=[ext.extjs_resources])
 
-Register additional ExtJs paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Register additional ExtJs paths (extjs.py)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ExtJs need to know where additional ExtJs-Classes can be loaded. This is why each namespace used in Extjs need to be registred. In this example we regstister two namespace for 'bst.pygasus.demo.view' and 'bst.pygasus.demo.controller'. The path begins normaly with 'fanstatic', as next your library name "demo" ( :python:`Library('demo', 'app')` ) and at the end a subdirectory.
 
 .. code:: python
 
@@ -209,8 +254,15 @@ Register additional ExtJs paths
         namespace = 'bst.pygasus.demo.view'
         path = 'fanstatic/demo/view'
 
-Define a schema
-~~~~~~~~~~~~~~~
+    class ViewClassPathMapping(ext.ClassPathMapping):
+        namespace = 'bst.pygasus.demo.contoller'
+        path = 'fanstatic/demo/controller'
+
+
+Define a schema (schema.py)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With this schema different ExtJs-Classes, like form, store or model are on the fly auto generated. Look at the package bst.pygasus.scaffolding for the supported types and class generation. Feel free to extend your own generation of ExtJs classes for your project. This schema will also be used to transform json to a python model or the revers.
 
 .. code:: python
 
@@ -230,8 +282,10 @@ Define a schema
         publication = schema.Date(title='Publication', required=True)
 
 
-Create a Model
-~~~~~~~~~~~~~~
+Create a Model (model.py)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The model is used to transfer data from server to client and back.
 
 .. code:: python
 
@@ -241,16 +295,93 @@ Create a Model
 
     class Card(ext.Model):
         ext.schema(schema.ICard)
+        
         id = FieldProperty(ICard['id'])
         name = FieldProperty(ICard['name'])
         costs = FieldProperty(ICard['costs'])
         publication = FieldProperty(ICard['publication'])
 
-Create a handler for CRUD requests
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a handler for CRUD requests (handler.py)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The handler for an definded model provide the CRUD operations. Now is up to you what ever you implement in these methods.
+
+.. code:: python
+
+    class CardHandler(ext.AbstractModelHandler):
+        ext.adapts(model.Card, IRequest)
+    
+        def get(self, model, batch):
+            start, limit = self.slice()
+            property, direction = self.sort()
+    
+            return cardIndexer.search_index(start, limit, property, direction)
+    
+        def create(self, model, batch):
+            model.id = cardIndexer.get_next_id()
+            cardIndexer.extend_index(model)
+    
+            return [model], 1
+    
+        def update(self, model, batch):
+            cardIndexer.update_index(model)
+    
+            return [model], 1
+    
+        def delete(self, model, batch):
+            cardIndexer.reduce_index(model)
+    
+            return [model], 1
+
+
 
 i18n (Internationalization)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Usual you define a domain name for each package. For do that create an instance from the MessageFactory in the __init__.py
+
+.. code:: python
+
+    from zope.i18nmessageid import MessageFactory
+
+    _ = MessageFactory('bst.pygasus.demo')
+
+Now you can use translation msg to anywhere you want a string in multiple languages.
+
+.. code:: python
+
+    publication = schema.Date(title=_('publication_title', default='Publication'), required=True)
+
+
+If you want use translations in ExtJs the same works similar like in python. Simply write at top of the file a variable and give the domain name in the MessageFactory.
+
+.. code:: javascript
+
+    var _ = i18n('bst.pygasus.demo');
+
+    Ext.define('bst.pygasus.demo.view.MainView', {
+        extend: 'Ext.container.Viewport',
+    
+        ....
+
+Now you can anywhere in the class translate message with the variable defined.
+
+.. code:: javascript
+
+    items: [{
+        xtype: 'button',
+        action: 'save',
+        text: _('tr_save', 'Save'),
+    },
+
+
+You can use lingua package to crawl translation from python and extjs files and generate a .pot file with it. This application is allready installed by the buildout. After generating a .pot file you can use different kind of gettext tool to merge and build the finale .po and .mo files for each languages.
+
+.. code:: bash
+
+    ./bin/pot-create –d <domain> -o <filename>.pot <source>
+
 
 
 
@@ -259,8 +390,8 @@ Demo application
 We have a demo application that you can easy install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_..
 
 
-Additional References
-=====================
+External References
+===================
 
 * http://zopeinterface.readthedocs.org/en/latest/
 * http://zopecomponent.readthedocs.org/en/latest/
