@@ -20,6 +20,7 @@ class LocalComponentsRegistry(BaseGlobalComponents):
     """ The local component registry bound
         on application context.
     """
+    
     def __init__(self, name):
         super(LocalComponentsRegistry, self).__init__(
             name=name,
@@ -37,6 +38,9 @@ class ApplicationContext(GlobalUtility):
     """
     baseclass()
     name(DEFAULT_EXTJS_APPLICATION)
+
+    credentials_pluggins = ()
+    authentication_pluggins = ()
 
     def __init__(self):
         super(ApplicationContext, self).__init__()
