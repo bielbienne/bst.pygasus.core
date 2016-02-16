@@ -3,8 +3,8 @@
 
 
 
-.. image:: https://travis-ci.org/bielbienne/bst.pygasus.demo.svg?branch=master
-    :target: https://travis-ci.org/bielbienne/bst.pygasus.demo
+.. image:: https://travis-ci.org/codeix/bst.pygasus.demo.svg?branch=master
+    :target: https://travis-ci.org/codeix/bst.pygasus.demo
 
 .. contents::
 
@@ -86,8 +86,8 @@ buildout.cfg
     [buildout]
     
     extends = 
-        https://raw.githubusercontent.com/bielbienne/bst.pygasus.demo/master/sources.cfg
-        https://raw.githubusercontent.com/bielbienne/bst.pygasus.demo/master/versions.cfg
+        https://raw.githubusercontent.com/codeix/bst.pygasus.demo/master/sources.cfg
+        https://raw.githubusercontent.com/codeix/bst.pygasus.demo/master/versions.cfg
     
     develop = dev/myproject  
     parts =
@@ -439,7 +439,7 @@ As an another example we use buffered store from scaffolding:
 
 Demo application
 ----------------
-We have a demo application that you can easily install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/bielbienne/bst.pygasus.demo>`_.
+We have a demo application that you can easily install with a buildout file. If you are interested, please follow the instruction at `bst.pygasus.demo <https://github.com/codeix/bst.pygasus.demo>`_.
 
 
 External References
@@ -452,9 +452,3 @@ External References
 * https://pypi.python.org/pypi/zc.buildout/2.4.0
 * http://grok.zope.org/documentation/tutorial/grok-poller-tutorial/adapters
 * http://www.fanstatic.org/en/latest/
-
-
-About us
-========
-We are the IT Services of Biel/Bienne, Switzerland.
-http://foss.biel-bienne.ch/blog/
